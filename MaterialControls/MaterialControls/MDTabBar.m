@@ -267,7 +267,9 @@
   }
 
   self.frame = CGRectMake(0, 0, segmentedControlWidth, tabBar.tabBarHeight);
-  tabBar.frame = self.bounds;
+    CGRect tabRect = tabBar.frame;
+    tabRect.origin.y = 0;
+    tabBar.frame = tabRect;
 }
 
 - (NSArray *)getSegmentList {
