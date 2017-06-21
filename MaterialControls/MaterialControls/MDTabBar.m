@@ -406,8 +406,6 @@
 - (instancetype)init {
   if (self = [super init]) {
     //    [self initContent];
-      _tabBarHeight = kMDTabBarHeight;
-      _indicatorHeight = kMDIndicatorHeight;
   }
   return self;
 }
@@ -446,6 +444,8 @@
 
 #pragma mark Private methods
 - (void)initContent {
+  self.tabBarHeight = kMDTabBarHeight;
+  self.indicatorHeight = kMDIndicatorHeight;
   self.horizontalInset = 8;
 
   segmentedControl = [[MDSegmentedControl alloc] initWithTabBar:self];
