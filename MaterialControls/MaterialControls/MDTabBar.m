@@ -57,8 +57,8 @@
   if (self = [super init]) {
     _tabs = [NSMutableArray array];
     indicatorView = [[UIView alloc]
-        initWithFrame:CGRectMake(0, kMDTabBarHeight - kMDIndicatorHeight, 0,
-                                 kMDIndicatorHeight)];
+        initWithFrame:CGRectMake(0, bar.tabBarHeight - bar.indicatorHeight, 0,
+                                 bar.indicatorHeight)];
     indicatorView.tag = NSIntegerMax;
     [self addSubview:indicatorView];
     [self addTarget:self
@@ -213,13 +213,13 @@
                      animations:^{
                        indicatorView.frame =
                            CGRectMake(frame.origin.x, self.bounds.size.height -
-                                                          kMDIndicatorHeight,
-                                      frame.size.width, kMDIndicatorHeight);
+                                                          tabBar.indicatorHeight,
+                                      frame.size.width, tabBar.indicatorHeight);
                      }];
   } else {
     indicatorView.frame =
-        CGRectMake(frame.origin.x, self.bounds.size.height - kMDIndicatorHeight,
-                   frame.size.width, kMDIndicatorHeight);
+        CGRectMake(frame.origin.x, self.bounds.size.height - tabBar.indicatorHeight,
+                   frame.size.width, tabBar.indicatorHeight);
   }
 }
 
@@ -266,7 +266,7 @@
     }
   }
 
-  self.frame = CGRectMake(0, 0, segmentedControlWidth, kMDTabBarHeight);
+  self.frame = CGRectMake(0, 0, segmentedControlWidth, tabBar.tabBarHeight);
 }
 
 - (NSArray *)getSegmentList {
@@ -406,6 +406,8 @@
 - (instancetype)init {
   if (self = [super init]) {
     //    [self initContent];
+      _tabBarHeight = kMDTabBarHeight;
+      _indicatorHeight = kMDIndicatorHeight;
   }
   return self;
 }
@@ -436,7 +438,7 @@
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  scrollView.frame = CGRectMake(0, 0, self.bounds.size.width, kMDTabBarHeight);
+  scrollView.frame = CGRectMake(0, 0, self.bounds.size.width, _tabBarHeight);
   [scrollView setContentInset:UIEdgeInsetsMake(0, self.horizontalInset, 0,
                                                self.horizontalInset)];
   [scrollView setContentSize:segmentedControl.bounds.size];
