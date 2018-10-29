@@ -222,22 +222,24 @@
   __unsafe_unretained typeof(self) weakSelf = self;
   disableDragging = YES;
   pageController.view.userInteractionEnabled = NO;
-  [pageController
-      setViewControllers:@[ viewController ]
-               direction:animateDirection
-                animated:YES
-              completion:^(BOOL finished) {
-                weakSelf->disableDragging = NO;
-                weakSelf->pageController.view.userInteractionEnabled = YES;
-                weakSelf->lastIndex = selectedIndex;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [pageController
+         setViewControllers:@[ viewController ]
+         direction:animateDirection
+         animated:NO
+         completion:^(BOOL finished) {
+             weakSelf->disableDragging = NO;
+             weakSelf->pageController.view.userInteractionEnabled = YES;
+             weakSelf->lastIndex = selectedIndex;
 
-                if ([weakSelf->_delegate
-                        respondsToSelector:@selector(tabBarViewController:
-                                                           didMoveToIndex:)]) {
-                  [weakSelf->_delegate tabBarViewController:weakSelf
-                                             didMoveToIndex:selectedIndex];
-                }
-              }];
+             if ([weakSelf->_delegate
+                  respondsToSelector:@selector(tabBarViewController:
+                                               didMoveToIndex:)]) {
+                      [weakSelf->_delegate tabBarViewController:weakSelf
+                                                 didMoveToIndex:selectedIndex];
+                  }
+         }];
+    });
 }
 
 #pragma mark - PageViewController Delegate

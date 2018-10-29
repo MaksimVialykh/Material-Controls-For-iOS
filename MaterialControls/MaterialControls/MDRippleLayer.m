@@ -133,9 +133,9 @@
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
-  if (anim == [self animationForKey:@"opacityAnim"]) {
-    self.opacity = 0;
-  } else if (flag) {
+   if([[anim valueForKey:@"opacityAnim"] isEqual:@"opacity"]) {
+        self.opacity = 0;
+    } else if (flag) {
     if (_userIsHolding) {
       _effectIsRunning = false;
       if ([self.layerDelegate respondsToSelector:@selector(mdLayer:didFinishEffect:)]) {
@@ -326,7 +326,7 @@
     opacityAnim.removedOnCompletion = false;
     opacityAnim.fillMode = kCAFillModeForwards;
     opacityAnim.delegate = self;
-
+    [opacityAnim setValue:@"opacity" forKey:@"opacityAnim"];
     [self addAnimation:opacityAnim forKey:@"opacityAnim"];
   }
 
